@@ -35,7 +35,7 @@ class YoloExtractor(BaseTextExtractor):
             from ultralytics import YOLO
             self.yolo_model = YOLO(self.model_path)
         except Exception as e:
-            logger.warning(f"❌ Could not load YOLO model: {e}")
+            logger.warning(f"Could not load YOLO model: {e}")
             return
 
         # 2. Load RapidOCR (Lightweight)
@@ -43,7 +43,7 @@ class YoloExtractor(BaseTextExtractor):
             from rapidocr_onnxruntime import RapidOCR
             # Force CPU for stability on low-end devices
             self.ocr_engine = RapidOCR(det_use_cuda=False, cls_use_cuda=False, rec_use_cuda=False)
-            logger.info("✅ YOLO + RapidOCR loaded successfully.")
+            logger.info("YOLO + RapidOCR loaded successfully.")
         except ImportError:
             logger.error("RapidOCR not found. Install with: pip install rapidocr_onnxruntime")
 
