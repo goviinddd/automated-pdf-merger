@@ -83,13 +83,13 @@ class PipelineOrchestrator:
                 doc_info = get_document_info(file_path, doc_type)
 
                 if doc_info.po_number:
-                    # Success: We found the "Universe ID"
+                    # Success: We found the "PO ID"
                     self.db.update_status(file_path, 'SUCCESS', po_number=doc_info.po_number)
-                    logger.info(f"✓ Solved: {doc_type.upper()} -> PO: {doc_info.po_number}")
+                    logger.info(f"Solved: {doc_type.upper()} -> PO: {doc_info.po_number}")
                 else:
                     # Failure: Move to Manual Review
                     self.db.update_status(file_path, 'MANUAL_REVIEW', error="No PO Number found")
-                    logger.warning(f"⚠ Failed: Could not identify PO for {file_path}")
+                    logger.warning(f"Failed: Could not identify PO for {file_path}")
 
             except Exception as e:
                 logger.error(f"CRITICAL ERROR processing {file_path}: {e}")
@@ -121,12 +121,12 @@ class PipelineOrchestrator:
 
                 # Actuation: Save the file
                 output_path = self.fs.save_merged_pdf(merger, po_number)
-                logger.info(f"★ MERGED: {po_number} ({len(sorted_files)} docs) -> {output_path}")
+                logger.info(f"MERGED: {po_number} ({len(sorted_files)} docs) -> {output_path}")
 
                 # Update State: Mark these files as 'MERGED'
                 for path in file_paths_used:
                     self.db.update_status(path, 'MERGED')
-                    self.fs.move_to_archive(path) 
+              #      self.fs.move_to_archive(path) 
 
             except Exception as e:
                 logger.error(f"Failed to merge bundle for PO {po_number}: {e}")

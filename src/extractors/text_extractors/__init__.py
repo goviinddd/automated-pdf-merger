@@ -1,5 +1,5 @@
-from .digital import FastDigitalExtractor, AiDigitalExtractor
+from .digital import FastDigitalExtractor
 from .ocr import RapidOCRExtractor
 from .yolo_extractor import YoloExtractor
 
-__all__ = ['FastDigitalExtractor', 'AiDigitalExtractor', 'RapidOCRExtractor', 'YoloExtractor']
+__all__ = ['FastDigitalExtractor', 'RapidOCRExtractor', 'YoloExtractor']

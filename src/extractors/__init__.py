@@ -2,15 +2,12 @@ import logging
 import os
 from typing import Optional
 
-# Import Data Contracts
 from .models import DocumentInfo
 
-# Import Tools
 from .text_extractors.digital import FastDigitalExtractor
 from .text_extractors.ocr import RapidOCRExtractor
 from .text_extractors.yolo_extractor import YoloExtractor 
 
-# Import The "Brain"
 from .po_finder import heuristics
 
 logger = logging.getLogger(__name__)
@@ -18,16 +15,14 @@ logger = logging.getLogger(__name__)
 # --- INITIALIZATION ---
 _fast_extractor = FastDigitalExtractor()
 _ocr_extractor = RapidOCRExtractor()
-# Removed _ai_extractor to save space
 
-# Check for the Sniper Model
 YOLO_MODEL_PATH = "po_detector.pt"
 if os.path.exists(YOLO_MODEL_PATH):
     _yolo_extractor = YoloExtractor(model_path=YOLO_MODEL_PATH, target_class_id=1) 
-    logger.info(f"✅ YOLO Sniper loaded from {YOLO_MODEL_PATH}")
+    logger.info(f"YOLOv8 loaded from {YOLO_MODEL_PATH}")
 else:
     _yolo_extractor = None
-    logger.warning(f"⚠️ YOLO model not found at {os.path.abspath(YOLO_MODEL_PATH)}. Sniper mode disabled.")
+    logger.warning(f"YOLO model not found at {os.path.abspath(YOLO_MODEL_PATH)}. Sniper mode disabled.")
 
 def get_document_info(file_path: str, doc_type: str) -> DocumentInfo:
     """
@@ -41,7 +36,7 @@ def get_document_info(file_path: str, doc_type: str) -> DocumentInfo:
         po_number = heuristics.rescue_yolo_hit(yolo_text)
         
         if po_number:
-             logger.info(f"🎯 YOLO Sniper Hit: {po_number}")
+             logger.info(f"YOLO Hit: {po_number}")
              return DocumentInfo(file_path, doc_type, po_number)
 
     # --- STRATEGY 2: The Fast Track (Digital) ---
@@ -50,7 +45,7 @@ def get_document_info(file_path: str, doc_type: str) -> DocumentInfo:
         extracted_text = _fast_extractor.extract(file_path)
         po_number = heuristics.find_po_number_in_text(extracted_text)
         if po_number:
-            logger.info(f"⚡️ Digital Fast Track Hit: {po_number}")
+            logger.info(f"Digital Fast Track Hit: {po_number}")
             return DocumentInfo(file_path, doc_type, po_number)
 
     # --- STRATEGY 3: Final Brute Force (RapidOCR) ---
