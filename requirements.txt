@@ -1,0 +1,9 @@
+pypdf
+python-dotenv
+pdf2image
+ultralytics
+rapidocr-onnxruntime
+pypdfium2
+opencv-python-headless
+pillow
+pdfplumber
