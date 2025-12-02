@@ -21,6 +21,8 @@ Archive/
 Quarantine/
 Test_Zone/
 yolo_training/
+debug_crops/
+debug_yolo_crops/
 # Logs and Secrets
 *.log
 .env

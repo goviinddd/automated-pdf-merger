@@ -43,7 +43,7 @@ def apply_strict_patterns(text: str) -> Optional[str]:
         r'^(J\d{3,}-\d{6,})',
         r'^(90\d{6})',
         r'^(300\d{6})',
-        r'^(13\d{3,})', # This greedy regex was the culprit!
+        r'^(13\d{3,})', 
     ]
 
     for pattern in patterns:
@@ -60,13 +60,8 @@ def rescue_yolo_hit(raw_text: str) -> Optional[str]:
     # 1. Normalize
     clean = aggressive_normalize(raw_text)
     
-    # --- CRITICAL FIX: REPETITION CHECK FIRST ---
-    # We fix '1306013060' -> '13060' BEFORE checking regex.
     clean = fix_repetition(clean)
     
-    # 2. Try Strict Pattern Matching (Sieve)
-    # Now that it's clean, the regex will correctly approve '13060'
-    # and correctly chop 'P215265200PELICAN' -> 'P215265'
     strict_hit = apply_strict_patterns(clean)
     if strict_hit:
         return strict_hit

@@ -22,7 +22,7 @@ if os.path.exists(YOLO_MODEL_PATH):
     logger.info(f"YOLOv8 loaded from {YOLO_MODEL_PATH}")
 else:
     _yolo_extractor = None
-    logger.warning(f"YOLO model not found at {os.path.abspath(YOLO_MODEL_PATH)}. Sniper mode disabled.")
+    logger.warning(f"YOLO model not found at {os.path.abspath(YOLO_MODEL_PATH)}.")
 
 def get_document_info(file_path: str, doc_type: str) -> DocumentInfo:
     """
