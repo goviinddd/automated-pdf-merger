@@ -7,3 +7,4 @@ pypdfium2
 opencv-python-headless
 pillow
 pdfplumber
+google-generativeai
