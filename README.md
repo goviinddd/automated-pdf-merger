@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 Create a .env file in the root directory.
 
-Add your Gemini API key (if using the fallback feature):
+Add your Gemini API key :
 
 GEMINI_API_KEY=your_api_key_here
 
